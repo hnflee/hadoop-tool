@@ -1,0 +1,8 @@
+datafile=/home/hadoop/sqoop/data
+url=jdbc:oracle:thin:@10.72.8.226:1521:PGSUAT226
+dbuser=et
+password=et226
+drive =oracle.jdbc.driver.OracleDriver
+hive_db=ET_UAT
+oracle_db=ET
+	 
