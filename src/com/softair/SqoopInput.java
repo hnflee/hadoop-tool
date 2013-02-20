@@ -109,13 +109,13 @@ public class SqoopInput {
 				
 				Class.forName(prop.getProperty("drive"));
 				conn = DriverManager.getConnection(prop.getProperty("url"),
-						prop.getProperty("dbuser"), prop.getProperty("password")); // ������ݿ�
+						prop.getProperty("dbuser"), prop.getProperty("password")); // 
 				stmt = conn.createStatement();
 				// get table scheme from oracle
 				result = stmt
 						.executeQuery(" SELECT t.COLUMN_NAME,t.DATA_TYPE,t.DATA_LENGTH,t.DATA_SCALE  FROM all_tab_columns t WHERE table_name = '"
 								+ tempString + "'");
-				while (result.next()) {// �ж���û����һ��
+				while (result.next()) {//
 	
 					String COLUMN_NAME = result.getString(1);
 					String DATA_TYPE = result.getString(2);
@@ -207,7 +207,7 @@ public class SqoopInput {
 	
 						if(i!=0)
 						{
-							System.out.println("ERROR:sqoop renew time: "+i+" ��");	
+							System.out.println("ERROR:sqoop renew time: "+i+". ");	
 						}
 						
 						System.out.println("begin sqoop insert: " + tempString);
@@ -215,7 +215,7 @@ public class SqoopInput {
 						Process ee = Runtime.getRuntime().exec(cmd);
 						ee.waitFor();
 						
-						System.out.println("CMD statuts�� "+ee.exitValue());
+						System.out.println("CMD statuts: "+ee.exitValue());
 						
 						if(ee.exitValue()!=0)
 						{
@@ -261,7 +261,7 @@ public class SqoopInput {
 				break;
 	
 			} catch (Exception e) {
-				System.out.println("ERROR: table "+tempString+" reconnect: "+j+" times��");	
+				System.out.println("ERROR: table "+tempString+" reconnect: "+j+" times");	
 				
 				try {
 					conn.close(); 
