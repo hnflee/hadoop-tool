@@ -23,41 +23,36 @@ public class SqoopInput {
 	 * @param args
 	 * @throws FileNotFoundException
 	 */
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args)  {
 		
 		// TODO Auto-generated method stub
 		long start_time=System.currentTimeMillis();
 
 		if(args[0]==null)
 		{
-			System.out.println("ERROR: please add arg0 for properties path  for:/home/hadoop/properties");
+			System.out.println("ERROR: please add arg0 for properties path  for example:/home/hadoop/properties");
 			return;
 		}
 		
 		
-		InputStream inputStream = new FileInputStream(args[0].toString());
+		
 		
 		try {
+			InputStream inputStream = new FileInputStream(args[0].toString());
 			if(inputStream.available()==0)
 			{
 				System.out.println("ERROR: properties file length=0 error!");
 				inputStream.close();
 				return;
 			}
+			prop.load(inputStream);
 		} catch (IOException e2) {
 			// TODO Auto-generated catch block
 			System.out.println("ERROR: properties file reader error!");
 			e2.printStackTrace();
 			return;
 		}
-			
-		
 
-		try {
-			prop.load(inputStream);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
 
 		File file = new File(prop.getProperty("datafile"));
 		BufferedReader reader = null;
@@ -109,13 +104,13 @@ public class SqoopInput {
 				
 				Class.forName(prop.getProperty("drive"));
 				conn = DriverManager.getConnection(prop.getProperty("url"),
-						prop.getProperty("dbuser"), prop.getProperty("password")); // ������ݿ�
+						prop.getProperty("dbuser"), prop.getProperty("password")); // 
 				stmt = conn.createStatement();
 				// get table scheme from oracle
 				result = stmt
-						.executeQuery(" SELECT t.COLUMN_NAME,t.DATA_TYPE,t.DATA_LENGTH,t.DATA_SCALE  FROM all_tab_columns t WHERE table_name = '"
+						.executeQuery(" SELECT t.COLUMN_NAME,t.DATA_TYPE,t.DATA_LENGTH,t.DATA_SCALE  FROM "+prop.getProperty("oracle_db")+"."+prop.getProperty("all_tab_columns_view")+" t WHERE table_name = '"
 								+ tempString + "'");
-				while (result.next()) {// �ж���û����һ��
+				while (result.next()) {//
 	
 					String COLUMN_NAME = result.getString(1);
 					String DATA_TYPE = result.getString(2);
@@ -169,7 +164,7 @@ public class SqoopInput {
 				try
 				{
 				result1 = stmt1
-						.executeQuery(" SELECT  t1.CONSTRAINT_NAME  FROM all_cons_columns t1 WHERE table_name = '"+tempString+"' and  CONSTRAINT_NAME like '%PK_%'");
+						.executeQuery(" SELECT  t1.CONSTRAINT_NAME  FROM "+prop.getProperty("oracle_db")+"."+prop.getProperty("all_cons_columns_view")+" t1 WHERE table_name = '"+tempString+"' and  CONSTRAINT_NAME like '%PK_%'");
 				}catch(Exception e)
 				{
 					System.out.println("WARNING: search table for  contain primary_key  is error");
@@ -190,13 +185,13 @@ public class SqoopInput {
 				String CONNECTURL = prop.getProperty("url");
 				String ORACLENAME = prop.getProperty("dbuser");
 				String ORACLEPASSWORD = prop.getProperty("password");
-				String HIVE_DB = prop.getProperty("hive_db");
-				String ORACLE_DB = prop.getProperty("oracle_db");
+				String HIVE_DB = prop.getProperty("hive_db").toUpperCase();
+				String ORACLE_DB = prop.getProperty("oracle_db").toUpperCase();
 				String cmd = "sqoop import --connect " + CONNECTURL + " --username "
 						+ ORACLENAME + " --password " + ORACLEPASSWORD
 						+ " --hive-import --hive-overwrite --append --table "
-						+ ORACLE_DB + "." + tempString + " --hive-table " + HIVE_DB
-						+ "." + tempString + " " + tmp;
+						+ ORACLE_DB.toUpperCase() + "." + tempString.toUpperCase() + " --hive-table " + HIVE_DB.toUpperCase()
+						+ "." + tempString.toUpperCase() + " " + tmp;
 				
 				
 				int sqoop_status=1;
@@ -207,15 +202,15 @@ public class SqoopInput {
 	
 						if(i!=0)
 						{
-							System.out.println("ERROR:sqoop renew time: "+i+" ��");	
+							System.out.println("ERROR:sqoop renew time: "+i+". ");	
 						}
 						
 						System.out.println("begin sqoop insert: " + tempString);
-						System.out.println("CMD :"+cmd);
+						System.out.println("l :"+cmd);
 						Process ee = Runtime.getRuntime().exec(cmd);
 						ee.waitFor();
 						
-						System.out.println("CMD statuts�� "+ee.exitValue());
+						System.out.println("CMD statuts: "+ee.exitValue());
 						
 						if(ee.exitValue()!=0)
 						{
@@ -261,8 +256,8 @@ public class SqoopInput {
 				break;
 	
 			} catch (Exception e) {
-				System.out.println("ERROR: table "+tempString+" reconnect: "+j+" times��");	
-				
+				System.out.println("ERROR: table "+tempString+" reconnect: "+j+" times");	
+				e.printStackTrace();
 				try {
 					conn.close(); 
 					result.close();
