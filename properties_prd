@@ -1,0 +1,12 @@
+datafile=data_prd
+incrementfile=data_increment_prd
+hive_url=jdbc:hive://10.71.84.233:10000/default
+url=jdbc:oracle:thin:@10.2.40.13:1521:PGS
+dbuser=hadoop
+password=hadoopQazXsw
+drive =oracle.jdbc.driver.OracleDriver
+hive_db=ET_PRD
+oracle_db=ET
+all_tab_columns_view=et.a_tab_columns
+all_cons_columns_view=et.a_cons_columns
+	 
