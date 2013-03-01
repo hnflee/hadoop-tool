@@ -59,7 +59,7 @@
 		  <tstamp></tstamp>
 		  
 		  <mkdir dir="build/bin"/>
-		  <jar jarfile="build/bin/sqoop_export_job_${DSTAMP}${TSTAMP}.jar"   basedir="build/classes">
+		  <jar jarfile="build/bin/sqoop_export_job.jar"   basedir="build/classes">
 
 			<!--为jar包指定manifest，当然，如果jar包不需要打成runnable的形式，manifest可以不要-->
 		    <manifest>
