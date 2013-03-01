@@ -16,7 +16,8 @@ import java.util.Properties;
 public class SqoopInput {
 
 	private static Properties prop = new Properties();
-
+	private static long start_time;
+	private static long end_time;
 	/**
 	 * from datafile get talbe ,after insert data   to hive database
 	 * 
@@ -26,7 +27,7 @@ public class SqoopInput {
 	public static void main(String[] args)  {
 		
 		// TODO Auto-generated method stub
-		long start_time=System.currentTimeMillis();
+		 start_time=System.currentTimeMillis();
 
 		if(args[0]==null)
 		{
@@ -104,7 +105,7 @@ public class SqoopInput {
 				}
 			}
 		}
-		long end_time=System.currentTimeMillis();
+		end_time=System.currentTimeMillis();
 		
 		System.out.print("all operation times(mins):"+((end_time-start_time)/(1000*60)));
 
@@ -154,11 +155,12 @@ public class SqoopInput {
 		} catch (Exception e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
+			return;
 		}
 		
 		
-		
-		
+		//reset time for sum(oracle time)
+		start_time=System.currentTimeMillis();
 		
 		
 		
