@@ -10,7 +10,6 @@
 	<classpathentry kind="lib" path="lib/hive-metastore-0.10.0.jar"/>
 	<classpathentry kind="lib" path="lib/hive-service-0.10.0.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging-1.0.4.jar"/>
-	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/hadoop-ant-1.0.4.jar"/>
 	<classpathentry kind="lib" path="lib/hadoop-capacity-scheduler-1.0.4.jar"/>
 	<classpathentry kind="lib" path="lib/hadoop-client-1.0.4.jar"/>

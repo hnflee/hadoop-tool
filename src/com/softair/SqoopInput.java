@@ -127,6 +127,8 @@ public class SqoopInput {
 			System.out.println("ERROR: data_increment format is error  example: table colume  "+tempStrings.length);
 			return;
 		}
+		tempStrings[0]=tempStrings[0].toUpperCase();
+		
 		
 		String values="";
 		//select max(t.cre_date) from et_prd.rt_et_sales_report t where t.cre_date <> "null"
@@ -378,6 +380,7 @@ public class SqoopInput {
 		
 		
 			try {
+				tempString=tempString.toUpperCase();
 				System.out.println("begin table "+tempString+" insert !");
 				
 				Class.forName(prop.getProperty("drive"));
@@ -386,8 +389,8 @@ public class SqoopInput {
 				stmt = conn.createStatement();
 				// get table scheme from oracle
 				result = stmt
-						.executeQuery(" SELECT t.COLUMN_NAME,t.DATA_TYPE,t.DATA_LENGTH,t.DATA_SCALE  FROM "+prop.getProperty("oracle_db")+"."+prop.getProperty("all_tab_columns_view")+" t WHERE table_name = '"
-								+ tempString + "'");
+						.executeQuery(" SELECT t.COLUMN_NAME,t.DATA_TYPE,t.DATA_LENGTH,t.DATA_SCALE  FROM "+prop.getProperty("all_tab_columns_view")+" t WHERE table_name = '"
+								+ tempString.toUpperCase() + "'");
 				while (result.next()) {//
 	
 					String COLUMN_NAME = result.getString(1);
@@ -442,7 +445,7 @@ public class SqoopInput {
 				try
 				{
 				result1 = stmt1
-						.executeQuery(" SELECT  t1.CONSTRAINT_NAME  FROM "+prop.getProperty("oracle_db")+"."+prop.getProperty("all_cons_columns_view")+" t1 WHERE table_name = '"+tempString+"' and  CONSTRAINT_NAME like '%PK_%'");
+						.executeQuery(" SELECT  t1.CONSTRAINT_NAME  FROM "+prop.getProperty("all_cons_columns_view")+" t1 WHERE table_name = '"+tempString+"' and  CONSTRAINT_NAME like '%PK_%'");
 				}catch(Exception e)
 				{
 					System.out.println("WARNING: search table for  contain primary_key  is error");
