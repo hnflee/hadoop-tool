@@ -6,9 +6,19 @@ Created on 2013-03-01
 @author: lifeng
 '''
 
-import pexpect
 import os
-import sys
+
+
+
+def exec_sqoopcmd(cmd):
+    command_output=os.system(cmd)
+    if command_output==0:
+        print "sqoopcmd is ok"
+    else :
+        print "ERROR: sqoop cmd is error code  " + command_output
+        
+        
+
 
 if __name__=='__main__':
     print sys.argv[0]
